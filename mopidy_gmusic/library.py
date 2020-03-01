@@ -585,9 +585,9 @@ class GMusicLibraryProvider(backend.LibraryProvider):
         artist = self._to_mopidy_album_artist(song)
         date = str(song.get("year", 0))
 
-        album_id = song.get("albumId")
-        if album_id is None:
-            album_id = create_id(artist.name + name + date)
+        #album_id = song.get("albumId")
+        #if album_id is None:
+        album_id = create_id(artist.name + name + date)
 
         uri = "gmusic:album:" + album_id
         return Album(
@@ -601,11 +601,11 @@ class GMusicLibraryProvider(backend.LibraryProvider):
 
     def _to_mopidy_artist(self, song):
         name = song.get("artist", "")
-        artist_id = song.get("artistId")
-        if artist_id is not None:
-            artist_id = artist_id[0]
-        else:
-            artist_id = create_id(name)
+        #artist_id = song.get("artistId")
+        #if artist_id is not None:
+        #    artist_id = artist_id[0]
+        #else:
+        artist_id = create_id(name)
         uri = "gmusic:artist:" + artist_id
         return Artist(uri=uri, name=name)
 
