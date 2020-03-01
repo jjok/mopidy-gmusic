@@ -528,21 +528,21 @@ class GMusicLibraryProvider(backend.LibraryProvider):
                     )
 
                 if field == "uri":
-                    result_tracks = filter(uri_filter, result_tracks)
+                    result_tracks = list(filter(uri_filter, result_tracks))
                 elif field == "track_name":
-                    result_tracks = filter(track_name_filter, result_tracks)
+                    result_tracks = list(filter(track_name_filter, result_tracks))
                 elif field == "album":
-                    result_tracks = filter(album_filter, result_tracks)
+                    result_tracks = list(filter(album_filter, result_tracks))
                 elif field == "artist":
-                    result_tracks = filter(artist_filter, result_tracks)
+                    result_tracks = list(filter(artist_filter, result_tracks))
                 elif field == "albumartist":
-                    result_tracks = filter(albumartist_filter, result_tracks)
+                    result_tracks = list(filter(albumartist_filter, result_tracks))
                 elif field == "track_no":
-                    result_tracks = filter(track_no_filter, result_tracks)
+                    result_tracks = list(filter(track_no_filter, result_tracks))
                 elif field == "date":
-                    result_tracks = filter(date_filter, result_tracks)
+                    result_tracks = list(filter(date_filter, result_tracks))
                 elif field == "any":
-                    result_tracks = filter(any_filter, result_tracks)
+                    result_tracks = list(filter(any_filter, result_tracks))
                 else:
                     raise LookupError("Invalid lookup field: %s" % field)
 
