@@ -482,7 +482,7 @@ class GMusicLibraryProvider(backend.LibraryProvider):
         result_tracks = self.tracks.values()
 
         for (field, values) in query.items():
-            if not hasattr(values, "__iter__"):
+            if not isinstance(values, list):
                 values = [values]
             # FIXME this is bound to be slow for large libraries
             for value in values:
