@@ -373,6 +373,8 @@ class GMusicLibraryProvider(backend.LibraryProvider):
         return sorted(tracks, key=sorter)
 
     def refresh(self, uri=None):
+        logger.info("Refreshing library")
+
         self.tracks = {}
         self.albums = {}
         self.artists = {}
@@ -406,6 +408,11 @@ class GMusicLibraryProvider(backend.LibraryProvider):
             if not artist_found:
                 for artist in album.artists:
                     self.artists[artist.uri] = artist
+
+        logger.info("Loaded "
+                   f"{len(self.artists)} artists, "
+                   f"{len(self.albums)} albums, "
+                   f"{len(self.tracks)} tracks from Google Play Music")
 
     def search(self, query=None, uris=None, exact=False):
         if exact:
