@@ -585,7 +585,7 @@ class GMusicLibraryProvider(backend.LibraryProvider):
         artist = self._to_mopidy_album_artist(song)
         date = str(song.get("year", 0))
 
-        album_id = create_id(artist.name + name + date)
+        album_id = create_id(f"{artist.name}|{name}|{date}")
 
         uri = "gmusic:album:" + album_id
         return Album(
