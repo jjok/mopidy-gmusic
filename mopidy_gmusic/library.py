@@ -410,9 +410,9 @@ class GMusicLibraryProvider(backend.LibraryProvider):
                     self.artists[artist.uri] = artist
 
         logger.info("Loaded "
-                   f"{len(self.artists)} artists, "
-                   f"{len(self.albums)} albums, "
-                   f"{len(self.tracks)} tracks from Google Play Music")
+                    f"{len(self.artists)} artists, "
+                    f"{len(self.albums)} albums, "
+                    f"{len(self.tracks)} tracks from Google Play Music")
 
     def search(self, query=None, uris=None, exact=False):
         if exact:
