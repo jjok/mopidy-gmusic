@@ -530,13 +530,17 @@ class GMusicLibraryProvider(backend.LibraryProvider):
                 if field == "uri":
                     result_tracks = list(filter(uri_filter, result_tracks))
                 elif field == "track_name":
-                    result_tracks = list(filter(track_name_filter, result_tracks))
+                    result_tracks = list(
+                        filter(track_name_filter, result_tracks)
+                    )
                 elif field == "album":
                     result_tracks = list(filter(album_filter, result_tracks))
                 elif field == "artist":
                     result_tracks = list(filter(artist_filter, result_tracks))
                 elif field == "albumartist":
-                    result_tracks = list(filter(albumartist_filter, result_tracks))
+                    result_tracks = list(
+                        filter(albumartist_filter, result_tracks)
+                    )
                 elif field == "track_no":
                     result_tracks = list(filter(track_no_filter, result_tracks))
                 elif field == "date":
