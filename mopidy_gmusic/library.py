@@ -3,7 +3,7 @@ from functools import reduce
 
 from cachetools import LRUCache
 from mopidy import backend
-from mopidy.models import Album, Artist, Ref, SearchResult, Track
+from mopidy.models import Album, Artist, Image, Ref, SearchResult, Track
 from mopidy_gmusic.translator import (
     album_to_ref,
     artist_to_ref,
@@ -205,6 +205,11 @@ class GMusicLibraryProvider(backend.LibraryProvider):
 
         return []
 
+    def get_images(self, uris):
+        logger.debug("Looking up images: %s", uris)
+
+        return {uri: self.images.get(uri) for uri in uris}
+
     def lookup(self, uri):
         if uri.startswith("gmusic:track:"):
             return self._lookup_track(uri)
@@ -378,6 +383,7 @@ class GMusicLibraryProvider(backend.LibraryProvider):
         self.tracks = {}
         self.albums = {}
         self.artists = {}
+        self.images = {}
 
         album_tracks = {}
         for track in self.backend.session.get_all_songs():
@@ -385,6 +391,7 @@ class GMusicLibraryProvider(backend.LibraryProvider):
 
             self.tracks[mopidy_track.uri] = mopidy_track
             self.albums[mopidy_track.album.uri] = mopidy_track.album
+            self.images[mopidy_track.uri] = self._to_mopidy_image_list(track)
 
             # We don't care about the order because we're just using
             # this as a temporary variable to grab the proper album
@@ -622,6 +629,11 @@ class GMusicLibraryProvider(backend.LibraryProvider):
             name = song.get("artist", "")
         uri = "gmusic:artist:" + create_id(name)
         return Artist(uri=uri, name=name)
+
+    def _to_mopidy_image_list(self, song):
+        return [
+            Image(uri=image.get("url")) for image in song.get("albumArtRef", [])
+        ]
 
     def _aa_search_track_to_mopidy_track(self, search_track):
         track = search_track["track"]
