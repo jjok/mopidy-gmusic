@@ -206,7 +206,7 @@ class GMusicLibraryProvider(backend.LibraryProvider):
         return []
 
     def get_images(self, uris):
-        logger.debug("Looking up images: %s", uris)
+        logger.debug(f"Looking up images: {uris}")
 
         return {uri: self.images.get(uri) for uri in uris}
 
