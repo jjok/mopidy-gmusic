@@ -1,6 +1,6 @@
 import unittest
 
-from mopidy.models import Ref
+from mopidy.models import Image, Ref
 from mopidy_gmusic import backend as backend_lib
 
 from tests.test_extension import ExtensionTest
@@ -113,3 +113,44 @@ class LibraryTest(unittest.TestCase):
     def test_search(self):
         refs = self.backend.library.search({"artist": ["abba"]})
         assert refs is not None
+
+    def test_get_images_unknown_uri(self):
+        refs = self.backend.library.get_images(["gmusic:track:unknown_uri"])
+        assert refs == {"gmusic:track:unknown_uri": []}
+
+    def test_get_images_known_uris(self):
+        self.backend.library.images = {
+            "gmusic:track:89bbf2f8-5f98-3108-a29d-b1c5e2c671a2": [
+                Image(uri="https://cdn.com/image1.jpg")
+            ],
+            "gmusic:track:fd6f9d17-63d5-3d45-b2d2-efbb5cdd4be5": [
+                Image(uri="https://cdn.com/image2.jpg")
+            ],
+            "gmusic:track:89a7bd77-3d99-3ad4-a6f6-7b9d025f02a8": [
+                Image(uri="https://cdn.com/image3.jpg")
+            ],
+            "gmusic:track:6a89747a-c2f9-3815-a8e4-6c95ebe6c083": [
+                Image(uri="https://cdn.com/image4.jpg")
+            ],
+            "gmusic:track:21535e0f-2583-3e66-9766-b0f6e180c6b0": [
+                Image(uri="https://cdn.com/image5.jpg")
+            ],
+        }
+        refs = self.backend.library.get_images(
+            [
+                "gmusic:track:fd6f9d17-63d5-3d45-b2d2-efbb5cdd4be5",
+                "gmusic:track:89a7bd77-3d99-3ad4-a6f6-7b9d025f02a8",
+                "gmusic:track:21535e0f-2583-3e66-9766-b0f6e180c6b0",
+            ]
+        )
+        assert refs == {
+            "gmusic:track:fd6f9d17-63d5-3d45-b2d2-efbb5cdd4be5": [
+                Image(uri="https://cdn.com/image2.jpg")
+            ],
+            "gmusic:track:89a7bd77-3d99-3ad4-a6f6-7b9d025f02a8": [
+                Image(uri="https://cdn.com/image3.jpg")
+            ],
+            "gmusic:track:21535e0f-2583-3e66-9766-b0f6e180c6b0": [
+                Image(uri="https://cdn.com/image5.jpg")
+            ],
+        }

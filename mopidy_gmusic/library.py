@@ -27,6 +27,7 @@ class GMusicLibraryProvider(backend.LibraryProvider):
         self.tracks = {}
         self.albums = {}
         self.artists = {}
+        self.images = {}
 
         # aa_* caches are *only* used for temporary objects. Library
         # objects will never make it here.
@@ -208,7 +209,7 @@ class GMusicLibraryProvider(backend.LibraryProvider):
     def get_images(self, uris):
         logger.debug(f"Looking up images: {uris}")
 
-        return {uri: self.images.get(uri) for uri in uris}
+        return {uri: self.images.get(uri, []) for uri in uris}
 
     def lookup(self, uri):
         if uri.startswith("gmusic:track:"):
