@@ -13,6 +13,9 @@ BITRATES = {
 
 
 class GMusicPlaybackProvider(backend.PlaybackProvider):
+    def download_buffering(self):
+        return True
+
     def translate_uri(self, uri):
         track_id = uri.rsplit(":")[-1]
 
