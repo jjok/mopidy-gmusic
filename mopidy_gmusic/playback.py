@@ -13,7 +13,7 @@ BITRATES = {
 
 
 class GMusicPlaybackProvider(backend.PlaybackProvider):
-    def download_buffering(self):
+    def should_download(self, uri):
         return True
 
     def translate_uri(self, uri):
